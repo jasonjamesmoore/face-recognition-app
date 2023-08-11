@@ -159,8 +159,8 @@ onRouteChange = (route) => {
         <ParticlesBg type="cobweb" bg={true} />
         
         <Navigation isSignedIn={isSignedIn} onRouteChange={this.onRouteChange} />
-        {route === 'home'
-          ? <div>
+        { route === 'home'
+        ? <div>
               <Logo />
               <Rank 
                 name={this.state.user.name} 
