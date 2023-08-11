@@ -115,7 +115,7 @@ displayFaceBox = (box) => {
     //     type: 'visual-detector',
     //   }, this.state.input)
     // fetch("https://api.clarifai.com/v2/models/" + 'face-detection' + "/outputs", returnClarifaiRequestOptions(this.state.input))
-      fetch('https://facefinder-backend-ym41.onrender.com/imageurl', {
+      fetch('https://face-recognition-app-w-user-signin-and.onrender.com/imageurl', {
         method: 'post',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({
@@ -125,7 +125,7 @@ displayFaceBox = (box) => {
       .then(response => response.json())
       .then(response => {
         if (response) {
-          fetch('https://facefinder-backend-ym41.onrender.com/image', {
+          fetch('https://face-recognition-app-w-user-signin-and.onrender.com/image', {
             method: 'put',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({
