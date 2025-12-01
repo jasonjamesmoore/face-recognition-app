@@ -38,8 +38,11 @@ class Register extends React.Component {
             if (user.id) {
                 this.props.loadUser(user);
                 this.props.onRouteChange('home');
+            } else {
+                console.log('Registration failed:', user);
             }
         })
+        .catch(err => console.log('Registration error:', err))
     }
 
     render() { 
@@ -84,7 +87,7 @@ class Register extends React.Component {
                 <input 
                     onClick={this.onSubmitSignIn}
                     className="b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 dib" 
-                    type="submit" 
+                    type="button" 
                     value="Register" 
                 />
                 </div>
