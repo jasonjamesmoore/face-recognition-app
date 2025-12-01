@@ -24,6 +24,12 @@ class Register extends React.Component {
     }
 
     onSubmitSignIn = () => {
+        console.log('Attempting to register with:', {
+            name: this.state.name,
+            email: this.state.email,
+            password: this.state.password ? '***' : 'empty'
+        });
+        
         fetch('https://facefinder-backend-ym41.onrender.com/register', {
             method: 'post',
             headers: {'Content-Type': 'application/json'},
@@ -33,16 +39,23 @@ class Register extends React.Component {
                 name: this.state.name
             })
         })
-        .then(response => response.json())
+        .then(response => {
+            console.log('Response status:', response.status);
+            return response.json();
+        })
         .then(user => {
+            console.log('Response data:', user);
             if (user.id) {
                 this.props.loadUser(user);
                 this.props.onRouteChange('home');
             } else {
-                console.log('Registration failed:', user);
+                alert('Registration failed: ' + (user.message || user || 'Unknown error'));
             }
         })
-        .catch(err => console.log('Registration error:', err))
+        .catch(err => {
+            console.log('Registration error:', err);
+            alert('Network error: ' + err.message);
+        })
     }
 
     render() { 
