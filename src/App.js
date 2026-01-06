@@ -84,6 +84,13 @@ class App extends Component {
   }
 
 calculateFaceLocation = (data) => {
+  // Validate response structure
+  if (!data || !data.outputs || !data.outputs[0] || !data.outputs[0].data || 
+      !data.outputs[0].data.regions || !data.outputs[0].data.regions[0]) {
+    console.log('No face detected or invalid response structure');
+    return null;
+  }
+  
   const clarifaiFace = data.outputs[0].data.regions[0].region_info.bounding_box;
   const image = document.getElementById('inputimage');
   const width = Number(image.width);
@@ -124,6 +131,7 @@ displayFaceBox = (box) => {
       })
       .then(response => response.json())
       .then(response => {
+        console.log('API Response:', response);
         if (response) {
           fetch('https://facefinder-backend-ym41.onrender.com/image', {
             method: 'put',
@@ -137,8 +145,13 @@ displayFaceBox = (box) => {
             this.setState(Object.assign(this.state.user, {entries: count}))
           })
           .catch(console.log)
-        }  
-        this.displayFaceBox(this.calculateFaceLocation(response))
+        }
+        const box = this.calculateFaceLocation(response);
+        if (box) {
+          this.displayFaceBox(box);
+        } else {
+          console.log('Unable to detect face. Please try a different image.');
+        }
       })
       .catch(err => console.log(err));
   }
